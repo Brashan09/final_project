@@ -187,17 +187,20 @@ diagramElements.forEach(item => {
 });
 
 // --- NUEVO: Animación de Conclusión en Cadena ---
-gsap.from('.gsap-concl-point', {
-    opacity: 0,
-    y: 30,
-    duration: 0.5,
-    stagger: 0.2,
-    ease: 'power1.out',
-    scrollTrigger: {
-        trigger: '.conclusion-grid',
-        start: 'top 85%',
-        toggleActions: 'play none none none',
-    }
+// --- NUEVO: Animación de Conclusión en Cadena (Individual) ---
+gsap.utils.toArray('.gsap-concl-point').forEach((el, i) => {
+    gsap.from(el, {
+        opacity: 0,
+        y: 50,
+        duration: 0.8,
+        delay: i * 0.2, // Stagger manual
+        ease: 'power2.out',
+        scrollTrigger: {
+            trigger: el,
+            start: 'top 95%', // Se activa cuando el elemento entra casi al fondo
+            toggleActions: 'play none none none',
+        }
+    });
 });
 
 // Animación en cadena de Presenter Cards
@@ -209,7 +212,7 @@ gsap.from('.gsap-card', {
     stagger: 0.1,
     scrollTrigger: {
         trigger: '.presenters-grid',
-        start: 'top 75%',
+        start: 'top 85%',
         toggleActions: 'play none none none',
     }
 });
