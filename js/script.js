@@ -137,3 +137,80 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+// 3D Tilt Effect for Cards (Mantenido)
+const cards = document.querySelectorAll('.presenter-card');
+gsap.set(cards, { transition: 'transform 0.3s ease-out' });
+cards.forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const rotateX = ((y - centerY) / centerY) * -10;
+        const rotateY = ((x - centerX) / centerX) * 10;
+
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+    });
+
+    card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+    });
+});
+
+// ----------------------------------------------------------------------
+// --- NUEVO: INTERACTIVIDAD DE DIAGRAMA (Tooltips) ---
+// ----------------------------------------------------------------------
+const diagramElements = [
+    { id: '#qbit-init', msg: 'Inicialización en superposición (Puerta Hadamard)' },
+    { id: '#qft-gate', msg: 'Transformada Cuántica de Fourier: El componente clave para encontrar el período.' },
+    { id: '#qbit-ancilla', msg: 'El registro auxiliar (Ancilla) para calcular el módulo.' }
+];
+
+diagramElements.forEach(item => {
+    const el = document.querySelector(item.id);
+    if (el) {
+        el.style.cursor = 'pointer'; // Indicador visual de interactividad
+        el.title = item.msg; // Usamos el atributo title para el tooltip simple
+
+        el.addEventListener('mouseenter', () => {
+            // Pequeño efecto de pulsación/brillo con GSAP
+            gsap.to(el, { scale: 1.1, color: '#FFD700', duration: 0.2, ease: 'back.out(3)' });
+        });
+        el.addEventListener('mouseleave', () => {
+            gsap.to(el, { scale: 1, color: 'inherit', duration: 0.2 });
+        });
+    }
+});
+
+// --- NUEVO: Animación de Conclusión en Cadena ---
+gsap.from('.gsap-concl-point', {
+    opacity: 0,
+    y: 30,
+    duration: 0.5,
+    stagger: 0.2,
+    ease: 'power1.out',
+    scrollTrigger: {
+        trigger: '.conclusion-grid',
+        start: 'top 85%',
+        toggleActions: 'play none none none',
+    }
+});
+
+// Animación en cadena de Presenter Cards
+gsap.from('.gsap-card', {
+    opacity: 0,
+    y: 50,
+    duration: 0.6,
+    ease: 'back.out(1.2)',
+    stagger: 0.1,
+    scrollTrigger: {
+        trigger: '.presenters-grid',
+        start: 'top 75%',
+        toggleActions: 'play none none none',
+    }
+});
+

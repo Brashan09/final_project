@@ -279,6 +279,46 @@ section {
     background: rgba(102, 252, 241, 0.05);
 }
 
+/* --- Conclusion Section --- */
+.conclusion-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.conclusion-point {
+    background: rgba(11, 12, 16, 0.9);
+    padding: 2.5rem;
+    border: 1px solid var(--accent-secondary);
+    position: relative;
+    transition: all 0.3s ease;
+    clip-path: polygon(0 0,
+            100% 0,
+            100% 90%,
+            90% 100%,
+            0 100%);
+}
+
+.conclusion-point:hover {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 20px rgba(102, 252, 241, 0.2);
+    transform: translateY(-5px);
+}
+
+.conclusion-point h3 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    color: var(--accent-primary);
+    border-bottom: 1px solid rgba(102, 252, 241, 0.3);
+    padding-bottom: 0.5rem;
+}
+
+.conclusion-point p {
+    color: #e0e0e0;
+    font-size: 1rem;
+}
+
 /* --- Footer --- */
 footer {
     text-align: center;
